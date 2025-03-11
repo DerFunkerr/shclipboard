@@ -7,5 +7,6 @@
 </head>
 <body>
     <h1>Willkommen beim Self Hosted Clipboard</h1>
+    <?php echo "If you see this PHP works" ?>
 </body>
 </html>
