@@ -1,0 +1,260 @@
+/* Der Stern (*) ist ein universeller Selektor und beeinflusst alle Elemente
+auf der Seite */
+* {
+    outline: none; /* Entfernt den Fokusrahmen um Elemente */
+    border: none; /* Entfernt alle Standardrahmen */
+    margin: 0; /* Setzt den Außenabstand (margin) auf 0 */
+    padding: 0; /* Setzt den Innenabstand (padding) auf 0 */
+    font-size: 22px; /* Legt die Standard-Schriftgröße fest */
+    font-family: "JetBrains Mono"; /* Definiert die Schriftart */
+    box-sizing: border-box; /* Verhindert, dass Padding und Border die
+   Gesamtgröße eines Elements beeinflussen */
+   }
+   /* Das <body>-Element, also der gesamte Hintergrund der Seite */
+   body {
+    border-top: 3px solid #00e7e7; /* Fügt oben einen farbigen Rand hinzu */
+    background: #1c1e29; /* Setzt die Hintergrundfarbe */
+   }
+   /* Gestaltung für <h1>-Überschriften */
+   h1 {
+    color: #1c1e29; /* Textfarbe */
+    font-size: 25px; /* Schriftgröße */
+    text-align: left !important; /* Erzwingt linksbündigen Text,
+   überschreibt andere CSS-Regeln */
+    display: inline-block; /* Lässt das Element wie ein Block, aber in einer
+   Zeile erscheinen */
+    background: #00e7e7; /* Hintergrundfarbe */
+    border-radius: 20px; /* Runde Ecken */
+    padding-inline: 15px; /* Innenabstand horizontal */
+    margin-bottom: 20px; /* Abstand nach unten */
+    padding-top: 4px;
+    padding-bottom: 4px;
+   }
+   /* Stil für Bilder */
+   img {
+    max-width: 100%; /* Bilder werden nicht breiter als ihr Container */
+    max-height: 100%; /* Bilder werden nicht höher als ihr Container */
+    pointer-events: none; /* Bilder können nicht geklickt oder gezogen
+   werden */
+   }
+   /* Stil für Buttons */
+   button {
+    display: flex; /* Richtet den Inhalt im Button mit Flexbox aus */
+    justify-content: center; /* Zentriert den Inhalt horizontal */
+    align-items: center; /* Zentriert den Inhalt vertikal */
+    padding: 10px; /* Innenabstand */
+    color: white; /* Schriftfarbe */
+   }
+   /* Buttons und bestimmte Elemente erhalten eine sanfte Einblendanimation und
+   sind klickbar */
+   button:not(:disabled),
+   .clip,
+   #edit,
+   #trash,
+   #copy {
+    transition: opacity 0.3s ease; /* Langsame Veränderung der Transparenz
+   */
+    cursor: pointer; /* Zeigt an, dass das Element anklickbar ist */
+   }
+   /* Hover-Effekt für klickbare Elemente */
+   button:not(:disabled):hover,
+   .clip:hover,
+   #edit:hover,
+   #trash:hover,
+   #copy:hover {
+    opacity: 0.7; /* Macht das Element beim Überfahren mit der Maus leicht
+   transparent */
+   }
+   /* <form>-Elemente werden mit Flexbox ausgerichtet */
+   form {
+    display: flex;
+   }
+   /* Eine horizontale Trennlinie */
+   .divider {
+    margin: 30px 60px; /* Abstand zu anderen Elementen */
+    height: 4px; /* Höhe der Linie */
+    border-top: 4px solid #393d4f; /* Farbe der Linie */
+   }
+   /* Container für verschiedene Bedienelemente */
+   #cutils {
+    display: flex;
+    flex-direction: row; /* Elemente werden horizontal angeordnet */
+    justify-content: space-between; /* Elemente verteilen sich gleichmäßig
+   */
+    margin: 20px;
+    margin-bottom: 50px;
+   }
+   /* Unterelemente innerhalb von #cutils */
+   #cutils > div {
+    display: flex;
+    flex-direction: row;
+    min-height: 10px;
+    border-radius: 10px;
+    min-width: 100px;
+   }
+   /* Innenabstand zwischen Bedienelementen */
+   #cutils > div > .util {
+    margin-right: 10px;
+   }
+   /* Allgemeiner Stil für Bedienelemente */
+   .util {
+    min-height: 10px;
+    background: #393d50; /* Hintergrundfarbe */
+    border-radius: 5px; /* Abgerundete Ecken */
+    height: 55px; /* Höhe */
+   }
+   /* Container für neue Clips */
+   #cnewclip {
+    margin-inline: 60px;
+   }
+   /* Innenabstand für Elemente innerhalb von #cnewclip */
+   #cnewclip > div {
+    margin-inline: 40px;
+   }
+   /* Container für alle Clips */
+   #callclips {
+    display: flex;
+    margin-bottom: 50px;
+    margin-top: 20px;
+    margin-inline: 40px;
+   }
+   /* Textfeld für neue Clips */
+   #clip-input-new {
+    background: #393d50;
+    margin-top: 10px;
+    height: 500px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 500px;
+    max-height: 900px;
+    padding: 10px;
+    border-radius: 2px;
+    border-top: 3px solid #00e7e7;
+    color: white;
+   }
+   /* Textfeld für Clip-Namen */
+   #cname {
+    background: #393d50;
+    margin-top: 20px;
+    border-radius: 2px;
+    border-left: 3px solid #00e7e7;
+    color: white;
+    padding: 5px;
+    margin-right: 10px;
+    min-height: 55px;
+    width: 200px;
+   }
+   /* Button zum Erstellen eines Clips */
+   #create {
+    margin-top: 20px;
+   }
+   /* Container für gespeicherte Clips */
+   #cstoredclips {
+    margin-inline: 60px;
+   }
+   /* Einzelne Clip-Elemente */
+   .clip {
+    margin-right: 20px;
+    min-height: 30px;
+    background: #393d50;
+    border-radius: 2px;
+    border: 3px solid transparent;
+    color: white;
+    padding: 15px;
+   }
+   /* Dialogbox zur Clip-Bearbeitung */
+   #clipcdialog {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 30px;
+   }
+   /* Elemente innerhalb von #clipcdialog */
+   #clipcdialog > div {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-end;
+   }
+   /* Innenabstand für verschachtelte Elemente */
+   #clipcdialog > div > div {
+    margin-top: 20px;
+   }
+   /* Versteckte Buttons für Clip-Bearbeitung */
+   #edit,
+   #trash,
+   #copy {
+    height: 55px;
+    padding: 7.5px;
+    display: none;
+    border: 3px solid transparent;
+    cursor: pointer;
+   }
+   /* Info-Box, die am unteren Rand der Seite erscheint */
+   #infobox {
+    border: 3px solid #1c1e29;
+    position: fixed;
+    padding: 12px;
+    min-height: 55px;
+    bottom: -55px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #393d4f;
+    color: white;
+    font-size: 22px;
+    border-radius: 2px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    word-wrap: break-word;
+   }
+   /* Animationen für die Info-Box */
+   #infobox.visible {
+    animation: slideUp .5s ease-in-out forwards;
+   }
+   #infobox.hidden {
+    animation: slideDown .5s ease-in-out forwards;
+   }
+   /* Animation: Info-Box fährt hoch */
+   @keyframes slideUp {
+    0% {
+    bottom: -55px;
+    opacity: 0;
+    }
+    100% {
+    bottom: 20px;
+    opacity: 1;
+    }
+   }
+   2.2 assets/css/login.css
+   /* Animation: Info-Box fährt runter */
+   @keyframes slideDown {
+    0% {
+    bottom: 20px;
+    opacity: 1;
+    }
+    100% {
+    bottom: -55px;
+    opacity: 0;
+    }
+   }
+   /* Anpassungen für kleinere Bildschirme (max. 768px) */
+   @media (max-width: 768px) {
+    * {
+    font-size: 18px;
+    }
+    h1 {
+    font-size: 20px;
+    text-align: center;
+    padding-inline: 10px;
+    }
+    #cutils {
+    margin-inline: 10px;
+    margin-top: 10px;
+    }
+    .clip {
+    margin: 10px 0;
+    padding: 10px;
+    }
+   }
+   
