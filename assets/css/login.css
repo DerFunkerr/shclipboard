@@ -1,0 +1,127 @@
+/* Der Stern (*) ist ein universeller Selektor, der alle Elemente auf der
+Seite beeinflusst */
+* {
+    outline: none; /* Entfernt den Fokusrahmen */
+    border: none; /* Entfernt alle Standardrahmen */
+    margin: 0; /* Setzt den Außenabstand auf 0 */
+    padding: 0; /* Setzt den Innenabstand auf 0 */
+    font-size: 22px; /* Standard-Schriftgröße */
+    font-family: "JetBrains Mono"; /* Definiert die Schriftart */
+    box-sizing: border-box; /* Stellt sicher, dass Padding und Border nicht
+   die Gesamtbreite beeinflussen */
+   }
+   /* Der <body>-Bereich wird mittig zentriert */
+   body {
+    border-top: 3px solid #00e7e7; /* Oberer Rand mit Farbe */
+    background: #1c1e29; /* Hintergrundfarbe */
+    display: flex; /* Flexbox zur Zentrierung des Inhalts */
+    justify-content: center; /* Zentriert horizontal */
+    align-items: center; /* Zentriert vertikal */
+    height: 100vh; /* Nimmt die volle Bildschirmhöhe ein */
+   }
+   /* Der Container für das Login-Formular */
+   #login-form {
+    width: 20%; /* Standardbreite */
+    min-width: 300px; /* Minimale Breite, um zu verhindern, dass es zu klein
+   wird */
+    margin: auto; /* Automatische Zentrierung */
+   }
+   /* Stil für Buttons */
+   button {
+    display: flex; /* Flexbox für bessere Anordnung */
+    justify-content: center; /* Zentriert den Text horizontal */
+    align-items: center; /* Zentriert den Text vertikal */
+    padding: 10px; /* Innenabstand */
+    color: white; /* Schriftfarbe */
+    cursor: pointer; /* Zeigt an, dass es anklickbar ist */
+    background: #393d50; /* Hintergrundfarbe */
+    width: 100px; /* Feste Breite */
+    margin-inline: auto; /* Automatische Zentrierung */
+    margin-top: 20px; /* Abstand nach oben */
+    border-radius: 2px; /* Leicht abgerundete Ecken */
+   }
+   /* Animationseffekt für Buttons, wenn sie aktiv sind */
+   button:not(:disabled) {
+    cursor: pointer;
+    transition: opacity 0.3s ease; /* Sanfte Änderung der Transparenz */
+   }
+   /* Hover-Effekt für Buttons */
+   button:not(:disabled):hover {
+    opacity: 0.7; /* Macht den Button leicht transparent */
+   }
+   /* Stil für Eingabefelder */
+   input {
+    background: #393d50; /* Hintergrundfarbe */
+    margin-top: 30px; /* Abstand nach oben */
+    width: 100%; /* Volle Breite im Container */
+    border-radius: 2px; /* Leicht abgerundete Ecken */
+    border: 3px solid #00e7e7; /* Farbige Umrandung */
+    color: white; /* Schriftfarbe */
+    padding: 5px; /* Innenabstand */
+   }
+   /* Hauptcontainer */
+   #cmain {
+    width: 100%; /* Nimmt die gesamte Breite ein */
+   }
+   /* Info-Box für Nachrichten oder Hinweise */
+   #infobox {
+    border: 3px solid #1c1e29; /* Rahmenfarbe */
+    position: fixed; /* Fixe Position auf der Seite */
+    padding: 12px; /* Innenabstand */
+    min-height: 55px; /* Mindesthöhe */
+    bottom: -55px; /* Startposition außerhalb des sichtbaren Bereichs */
+    left: 50%; /* Zentrierung horizontal */
+    transform: translateX(-50%); /* Exakte Zentrierung */
+    background-color: #393d4f; /* Hintergrundfarbe */
+    color: white; /* Schriftfarbe */
+    font-size: 22px; /* Schriftgröße */
+    border-radius: 2px; /* Leicht abgerundete Ecken */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Schatteneffekt */
+    opacity: 0; /* Anfangs unsichtbar */
+    word-wrap: break-word; /* Zeilenumbruch für lange Wörter */
+   }
+   /* Sichtbare Info-Box mit Einblende-Animation */
+   #infobox.visible {
+    animation: slideUp .5s ease-in-out forwards;
+   }
+   /* Unsichtbare Info-Box mit Ausblende-Animation */
+   #infobox.hidden {
+    animation: slideDown .5s ease-in-out forwards;
+   }
+   3. JavaScript: The Web Comes Alive
+   JavaScript ist das Herzstück moderner Webentwicklung – ohne JavaScript wäre unsere Seite
+   nur eine langweilige, statische Sammlung von Texten und Bildern. Es bringt Leben in unsere
+   Anwendung, sorgt für Interaktivität und ermöglicht Funktionen wie Formulareingaben,
+   Animationen oder das dynamische Laden von Inhalten, ohne dass die Seite neu geladen
+   werden muss. Stell dir vor, du klickst auf einen Button, aber nichts passiert – genau das wäre
+   der Fall ohne JavaScript! Es ist die Sprache, die unsere Seite intelligent macht,
+   Benutzeraktionen verarbeitet und für eine nahtlose, moderne Benutzererfahrung sorgt.
+   /* Animation: Info-Box fährt nach oben ein */
+   @keyframes slideUp {
+    0% {
+    bottom: -55px; /* Ausgangspunkt */
+    opacity: 0; /* Unsichtbar */
+    }
+    100% {
+    bottom: 20px; /* Endposition sichtbar */
+    opacity: 1; /* Sichtbar */
+    }
+   }
+   /* Animation: Info-Box fährt nach unten aus */
+   @keyframes slideDown {
+    0% {
+    bottom: 20px; /* Ausgangspunkt sichtbar */
+    opacity: 1; /* Sichtbar */
+    }
+    100% {
+    bottom: -55px; /* Endposition unsichtbar */
+    opacity: 0; /* Unsichtbar */
+    }
+   }
+   /* Anpassungen für kleinere Bildschirme (maximal 768px) */
+   @media (max-width: 768px) {
+    #infobox {
+    max-width: 80%; /* Begrenzung der maximalen Breite */
+    font-size: 18px; /* Kleinere Schriftgröße */
+    }
+   }
