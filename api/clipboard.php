@@ -30,8 +30,7 @@ function sendResponse($data, $statusCode = 200) {
 function handlePost() {
  // Liest die JSON-Daten aus dem Anfrage-Body
  $request = json_decode(file_get_contents('php://input'), true);
- // Überprüft, ob die Anfrage gültig ist (enthält 'action' und
-'sessionToken')
+ // Überprüft, ob die Anfrage gültig ist (enthält 'action' und 'sessionToken')
  if (!$request || !isset($request['action']) ||
 !isset($_COOKIE['sessionToken'])) {
  sendResponse(['error' => 'Invalid request'], 400);

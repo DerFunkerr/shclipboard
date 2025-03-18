@@ -4,18 +4,16 @@ require 'config/redis.php';
 // Prüft, ob der Benutzer bereits eingeloggt ist
 if(isset($_COOKIE['sessionToken']) &&
 validateSessionToken($_COOKIE['sessionToken'])) {
- // Falls das Sitzungstoken existiert und gültig ist, wird der Benutzer
-zur Hauptseite weitergeleitet
+ // Falls das Sitzungstoken existiert und gültig ist, wird der Benutzer zur Hauptseite weitergeleitet
  header("Location: /");
- exit(); // Beendet die Ausführung des Codes, um sicherzustellen, dass
-keine weiteren Befehle ausgeführt werden
+ exit(); // Beendet die Ausführung des Codes, um sicherzustellen, dass keine weiteren Befehle ausgeführt werden
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
  <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initialscale=1.0">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
  <!-- Favicon (kleines Symbol in der Browser-Registerkarte) -->
  <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">

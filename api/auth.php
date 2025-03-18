@@ -1,11 +1,9 @@
 <?php
-// CORS (Cross-Origin Resource Sharing) Header erlauben Anfragen von einer
-bestimmten Domain
+// CORS (Cross-Origin Resource Sharing) Header erlauben Anfragen von einer bestimmten Domain
 header("Access-Control-Allow-Origin: http://localhost");
-header("Access-Control-Allow-Methods: POST, OPTIONS"); // Erlaubt nur POST
-und OPTIONS Anfragen
-header("Access-Control-Allow-Headers: Content-Type, Authorization"); //
-Definiert erlaubte Header
+header("Access-Control-Allow-Methods: POST, OPTIONS"); // Erlaubt nur POST und OPTIONS Anfragen
+header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Definiert erlaubte Header
+
 // OPTIONS Preflight-Anfragen verarbeiten (für CORS-Anfragen nötig)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
  http_response_code(204); // "No Content" Antwort für Preflight-Anfragen
@@ -35,8 +33,7 @@ function sendResponse($data, $statusCode = 200) {
  exit();
 }
 /**
-* Verarbeitet eingehende POST-Anfragen und ruft die entsprechende Funktion
-auf.
+* Verarbeitet eingehende POST-Anfragen und ruft die entsprechende Funktion auf.
 */
 function handlePost() {
  // JSON-Daten aus dem Anfrage-Body lesen
@@ -63,8 +60,7 @@ function handlePost() {
 /**
 * Behandelt den Login-Prozess.
 *
-* @param array $request Die übermittelten Logindaten (Benutzername &
-Passwort)
+* @param array $request Die übermittelten Logindaten (Benutzername & Passwort)
 */
 function handleLogin($request) {
  // Überprüfen, ob Benutzername und Passwort übermittelt wurden
@@ -101,11 +97,7 @@ function handleLogout() {
  deleteSessionToken($_COOKIE['sessionToken']);
  sendResponse(['message' => 'Logout successful'], 200);
 }
-1.4 api/clipboard.php
-Die clipboard.php Datei verarbeitet eingehende POST-Anfragen, um Benutzerdaten (Clips) zu
-erstellen, zu aktualisieren, zu löschen und abzurufen. Sie stellt sicher, dass nur authentifizierte
-Benutzer mit gültigem Session-Token Zugriff auf die API-Funktionen haben. Die
-Hauptfunktionen umfassen:
+
 /**
 * Setzt ein sicheres Session-Cookie für den Benutzer.
 *
@@ -113,15 +105,11 @@ Hauptfunktionen umfassen:
 */
 function initiateSession($sessionToken) {
  setcookie('sessionToken', $sessionToken, [
- 'expires' => time() + 86400, // Cookie läuft nach 24 Stunden
-ab
+ 'expires' => time() + 86400, // Cookie läuft nach 24 Stunden ab
  'path' => '/', // Gilt für die gesamte Domain
- // 'domain' => 'domain.com', // Erlaubt Cookie-Zugriff nur von
-dieser Domain
- 'httponly' => true, // Verhindert Zugriff durch
-JavaScript (Schutz gegen XSS)
- 'samesite' => 'Strict', // Schutz vor CSRF (keine
-Cookie-Übertragung bei Cross-Site-Anfragen)
+ // 'domain' => 'domain.com', // Erlaubt Cookie-Zugriff nur von dieser Domain
+ 'httponly' => true, // Verhindert Zugriff durch JavaScript (Schutz gegen XSS)
+ 'samesite' => 'Strict', // Schutz vor CSRF (keine Cookie-Übertragung bei Cross-Site-Anfragen)
  ]);
 }
 /**

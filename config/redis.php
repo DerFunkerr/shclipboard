@@ -1,31 +1,26 @@
 <?php
 // Erstellt eine neue Redis-Verbindung
 $redis = new Redis();
-$host = ""; // VNet Container IP
+$host = "192.168.0.121"; // VNet Container IP
 $port = 6379;
-// Verbindet sich mit dem Redis-Server unter der angegebenen IP-Adresse und
-dem Port 6379
+// Verbindet sich mit dem Redis-Server unter der angegebenen IP-Adresse und dem Port 6379
 $redis->connect($host, $port);
 /**
 * Holt die Benutzer-ID (uId) anhand eines Session-Tokens aus Redis.
 *
 * @param string $sessionToken Das Session-Token des Benutzers.
-* @return string|null Gibt die Benutzer-ID zurück oder null, falls nicht
-gefunden.
+* @return string|null Gibt die Benutzer-ID zurück oder null, falls nicht gefunden.
 */
 function getUserIdFromSessionToken($sessionToken) {
  global $redis; // Verwendet die globale Redis-Verbindung
- // Ruft die Benutzer-ID basierend auf dem gespeicherten Session-Token
-aus Redis ab
- return $redis->get("session:$sessionToken"); // Struktur: session:
-<sessionToken> -> <userId>
+ // Ruft die Benutzer-ID basierend auf dem gespeicherten Session-Token aus Redis ab
+ return $redis->get("session:$sessionToken"); // Struktur: session: <sessionToken> -> <userId>
 }
 /**
 * Überprüft, ob ein Session-Token in Redis existiert und gültig ist.
 *
 * @param string $sessionToken Das Session-Token, das überprüft werden soll.
-* @return bool Gibt `true` zurück, wenn das Token gültig ist, sonst
-`false`.
+* @return bool Gibt `true` zurück, wenn das Token gültig ist, sonst `false`.
 */
 function validateSessionToken($sessionToken) {
  global $redis; // Verwendet die globale Redis-Verbindung
@@ -45,11 +40,9 @@ function validateSessionToken($sessionToken) {
 */
 function storeSessionToken($sessionToken, $uid) {
  global $redis; // Verwendet die globale Redis-Verbindung
- // Speichert die Benutzer-ID unter dem Schlüssel "session:
-<sessionToken>"
+ // Speichert die Benutzer-ID unter dem Schlüssel "session: <sessionToken>"
  $redis->set("session:$sessionToken", $uid);
- // Setzt eine Ablaufzeit von 86400 Sekunden (24 Stunden), nach der das
-Token automatisch gelöscht wird
+ // Setzt eine Ablaufzeit von 86400 Sekunden (24 Stunden), nach der das Token automatisch gelöscht wird
  $redis->expire("session:$sessionToken", 86400);
 }
 /**

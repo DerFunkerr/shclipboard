@@ -2,8 +2,7 @@
 async function login(username, password) {
     try {
     // Senden einer POST-Anfrage an den Server zur Authentifizierung
-    const response = await
-   fetch('https://steelmountain.ddns.net/api/auth.php', {
+    const response = await fetch('http://192.168.0.121/api/auth.php', {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json',
@@ -11,7 +10,7 @@ async function login(username, password) {
     body: JSON.stringify({
     username: username, // Benutzername aus dem Eingabefeld
     password: password, // Passwort aus dem Eingabefeld
-    action: 'login' // Gibt an, dass es sich um eine LoginAnfrage handelt
+    action: 'login' // Gibt an, dass es sich um eine Login-Anfrage handelt
     }),
     });
     // Die Antwort vom Server wird als JSON interpretiert
@@ -20,20 +19,17 @@ async function login(username, password) {
     if (response.ok) {
     showInfo('Login erfolgreich! Weiterleitung...', 'success');
     setTimeout(() => {
-    window.location.href = '/'; // Nach erfolgreichem Login auf
-   die Startseite weiterleiten
+    window.location.href = '/'; // Nach erfolgreichem Login auf die Startseite weiterleiten
     }, 2000);
     } else {
     // Falls der Benutzername oder das Passwort falsch ist
     showInfo('Ungültiger Benutzername oder Passwort!', 'error');
-    console.error('Fehler beim Login:', data.error || 'Unbekannter
-   Fehler');
+    console.error('Fehler beim Login:', data.error || 'Unbekannter Fehler');
     }
     } catch (error) {
     // Falls ein Netzwerkfehler auftritt
     console.error('Ein Fehler ist beim Login aufgetreten:', error);
-    alert('Ein Netzwerkfehler ist aufgetreten. Bitte versuche es später
-   erneut.');
+    alert('Ein Netzwerkfehler ist aufgetreten. Bitte versuche es später erneut.');
     }
    }
    // Sobald die Webseite vollständig geladen ist, wird dieser Code ausgeführt
@@ -42,8 +38,7 @@ async function login(username, password) {
     const loginForm = document.getElementById('login-form');
     // Fügt dem Formular ein "submit"-Ereignis hinzu
     loginForm.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Verhindert das Standardverhalten des
-   Formulars (Seiten-Neuladen)
+    event.preventDefault(); // Verhindert das Standardverhalten des Formulars (Seiten-Neuladen)
     // Holt den Benutzername und das Passwort aus den Eingabefeldern
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
@@ -59,20 +54,10 @@ async function login(username, password) {
     } catch (error) {
     // Falls ein unerwarteter Fehler auftritt
     console.error('Ein Fehler ist aufgetreten:', error);
-    alert('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später
-   erneut.');
+    alert('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
     }
-   3.2 assets/js/index.js
-   Der gegebene JavaScript-Code erweitert die Funktionalität einer Webanwendung um drei
-   Hauptfunktionen: Uhrzeit-Anzeige, Benutzerabfrage und Logout-Mechanismus. Die
-   updateClock-Funktion aktualisiert jede Sekunde die aktuelle Uhrzeit und zeigt sie im HTMLElement mit der ID "clock" an. Die fetchUsername-Funktion sendet eine POST-Anfrage an
-   den Server, um den aktuell angemeldeten Benutzernamen abzurufen und im HTML-Element
-   "username" anzuzeigen. Falls ein Fehler auftritt, wird eine Fehlermeldung ausgegeben. Die
-   logout-Funktion sendet ebenfalls eine POST-Anfrage an den Server, um den Benutzer
-   abzumelden. Nach erfolgreichem Logout wird eine Meldung angezeigt und der Nutzer nach
-   zwei Sekunden zur Login-Seite weitergeleitet. Beim Laden der Webseite werden die
-    });
-   });
+    });   
+});
    // Funktion zur Anzeige von Meldungen auf der Webseite
    function showInfo(infoText, level) {
     // Holt das Info-Box-Element
@@ -99,4 +84,4 @@ async function login(username, password) {
     infoBox.classList.remove('visible');
     infoBox.classList.add('hidden');
     }, 5000);
-   
+}

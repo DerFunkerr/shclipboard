@@ -1,188 +1,338 @@
-// Sobald die Webseite vollständig geladen ist, wird die folgende Funktion
-ausgeführt
 document.addEventListener('DOMContentLoaded', async () => {
- // Das Button-Element mit der ID "create" wird geholt
- const createButton = document.getElementById('create');
- // Alle gespeicherten Clips werden geladen und angezeigt
- await fetchClips();
- // Falls der "Create"-Button existiert, wird ein Klick-Event hinzugefügt
- if (createButton) {
- createButton.addEventListener('click', async (event) => {
- event.preventDefault(); // Verhindert die Standardaktion des
-Buttons (z. B. Form-Absenden)
- // Holt den Clip-Namen und den Inhalt aus den Eingabefeldern
- const clipName = document.getElementById('cname').value.trim();
- const clipContent = document.getElementById('clip-inputnew').value.trim();
- try {
- // Wenn das Eingabefeld die Klasse "editing" hat, wird ein
-bestehender Clip aktualisiert,
- // ansonsten wird ein neuer Clip erstellt
- document.getElementById('clip-inputnew').classList.contains('editing')
- ? await updateClip(clipName, clipContent)
- : await createClip(clipName, clipContent);
- } catch (error) {
- console.error('Ein Fehler ist aufgetreten:', error);
- }
- });
- } else {
- console.error('Der "Create"-Button wurde im DOM nicht gefunden.');
- }
+    const createButton = document.getElementById('create');
+
+    await fetchClips();
+
+    if (createButton) {
+        createButton.addEventListener('click', async (event) => {
+            event.preventDefault(); // Prevent default behavior
+
+            const clipName = document.getElementById('cname').value.trim();
+            const clipContent = document.getElementById('clip-input-new').value.trim();
+
+            try {
+                document.getElementById('clip-input-new').classList.contains('editing')
+                ? await updateClip(clipName, clipContent)
+                : await createClip(clipName, clipContent);
+            } catch (error) {
+                console.error('An error occurred:', error);
+            }
+        });
+    } else {
+        console.error('Create button not found in the DOM.');
+    }
 });
-// Funktion zum Erstellen eines neuen Clips
+
 async function createClip(name, content) {
- // Überprüfung, ob der Inhalt nicht leer ist
- if(content.trim().length === 0) {
- showInfo('Clip-Inhalt darf nicht leer sein!', 'warning');
- return;
- }
- // Überprüfung, ob der Name nicht leer ist
- if(name.trim().length === 0) {
- showInfo('Clip-Name darf nicht leer sein!', 'warning');
- return;
- }
- // Überprüfung, ob der Clip-Name bereits existiert
- if(Array.from(document.getElementsByClassName('clip'))
- .some(el => el.innerText === name)) {
- showInfo('Clip existiert bereits!', 'warning');
- return;
- }
- try {
- // Senden einer Anfrage an den Server, um einen neuen Clip zu
-erstellen
- const response = await
-fetch('https://steelmountain.ddns.net/api/clipboard.php', {
- method: 'POST',
- headers: {
- 'Content-Type': 'application/json',
- },
- body: JSON.stringify({
- name: name,
- content: btoa(content), // Der Inhalt wird in Base64 kodiert
- action: 'create'
- }),
- });
- const data = await response.json();
- if (response.ok && data.status) {
- showInfo('Clip erfolgreich erstellt!');
- await fetchClips(); // Aktualisiert die Liste der Clips
- } else {
- showInfo('Clip-Erstellung fehlgeschlagen!', 'error');
- console.error('Fehler bei der Clip-Erstellung:', data.error ||
-'Unbekannter Fehler');
- }
- } catch (error) {
- console.error('Fehler beim Erstellen des Clips:', error);
- alert('Ein Netzwerkfehler ist aufgetreten. Bitte versuche es später
-erneut.');
- }
+
+    if(content.trim().length === 0) {
+        showInfo('Clip content cannot be empty!', 'warning');
+        return;
+    };
+
+    if(name.trim().length === 0) {
+        showInfo('Clip name cannot be empty!', 'warning');
+        return;
+    };
+
+    if(Array.from(document.getElementsByClassName('clip'))
+            .some(el => el.innerText === name))  {
+        showInfo('Clip already exists!', 'warning');
+        return;
+    };
+
+    try {
+        const response = await fetch('http://192.168.0.121/api/clipboard.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: name,
+                content: btoa(content),
+                action: 'create'
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.status) {
+            showInfo('Clip created successfully!');
+            await fetchClips();
+        } else {
+            showInfo('Clip creation failed!', 'error');
+            console.error('Clip creation failed:', data.error || 'Unknown error');
+        }
+    } catch (error) {
+        console.error('An error occurred while creating clip:', error);
+        alert('A network error occurred. Please try again later.');
+    }
 }
-// Funktion zum Abrufen aller Clips vom Server
+
 async function fetchClips() {
- try {
- const response = await
-fetch('https://steelmountain.ddns.net/api/clipboard.php', {
- method: 'POST',
- headers: {
- 'Content-Type': 'application/json',
- },
- body: JSON.stringify({ action: 'fetchall' }),
- });
- const data = await response.json();
- if(data.clipcount == 0) {
- // Falls keine Clips vorhanden sind, Eingabefelder leeren
- document.getElementById('cname').value = "";
- document.getElementById('clip-input-new').value = "";
- document.getElementById('callclips').innerHTML = "";
- exitEditingMode();
- exitSelectedMode();
- return;
- }
- if (response.ok && data.clips) {
- // Vorhandene Clips im UI anzeigen
- document.getElementById('cname').value = "";
- document.getElementById('clip-input-new').value = "";
- document.getElementById('callclips').innerHTML = "";
- const clipsContainer = document.getElementById('callclips');
- data.clips.forEach(clip => {
- var newClip = document.createElement('div');
- newClip.className = "clip";
- newClip.innerText = clip.name;
- clipsContainer.appendChild(newClip);
- });
- setClipPreviewEventListener();
- } else {
- console.error('Fehler beim Abrufen der Clips:', data.error ||
-'Unbekannter Fehler');
- }
- } catch (error) {
- console.error('Fehler beim Abrufen der Clips:', error);
- alert('Ein Netzwerkfehler ist aufgetreten. Bitte versuche es später
-erneut.');
- }
+    try {
+        const response = await fetch('http://192.168.0.121/api/clipboard.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'fetchall'
+            }),
+        });
+
+        const data = await response.json();
+
+        if(data.clipcount == 0) {
+            document.getElementById('cname').value = "";
+            document.getElementById('clip-input-new').value = "";
+            document.getElementById('callclips').innerHTML = "";
+            exitEditingMode();
+            exitSelectedMode();
+            return;
+        }
+
+        if (response.ok && data.clips) {
+            document.getElementById('cname').value = "";
+            document.getElementById('clip-input-new').value = "";
+            document.getElementById('callclips').innerHTML = "";
+            const clipscontainer = document.getElementById('callclips')
+
+            data.clips.forEach(clip => {
+                var newclip = document.createElement('div');
+                newclip.className = "clip";
+                newclip.innerText = clip.name
+                clipscontainer.appendChild(newclip);
+            });
+            setClipPreviewEventListener();
+        } else {
+            console.error('Clips fetch failed:', data.error || 'Unknown error');
+        }
+    } catch (error) {
+        console.error('An error occurred while fetching clips:', error);
+        alert('A network error occurred. Please try again later.');
+    }
 }
-// Funktion zum Abrufen eines einzelnen Clips
+
 async function fetchClip(name) {
- try {
- const response = await
-fetch('https://steelmountain.ddns.net/api/clipboard.php', {
- method: 'POST',
- headers: {
- 'Content-Type': 'application/json',
- },
- body: JSON.stringify({ name: name, action: 'fetch' }),
- });
- const data = await response.json();
- if(data.clipcount == 0) return;
- if (response.ok && data.content) {
- // Entschlüsselung des Base64-codierten Inhalts
- document.getElementById('clip-input-new').value =
-atob(data.content);
- } else {
- console.error('Fehler beim Abrufen des Clips:', data.error ||
-'Unbekannter Fehler');
- }
- } catch (error) {
- console.error('Fehler beim Abrufen des Clips:', error);
- alert('Ein Netzwerkfehler ist aufgetreten. Bitte versuche es später
-erneut.');
-Nachdem wir nun alle Dateien erstellt haben und den assets/img/ Ordner erstellt haben und
-die Bilder aus dem Teams-Ordner kopiert haben, müsste unsere finale Ordnerstruktur so
- }
+    try {
+        const response = await fetch('http://192.168.0.121/api/clipboard.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: name,
+                action: 'fetch'
+            }),
+        });
+
+        const data = await response.json();
+
+        if(data.clipcount == 0) return;
+
+        if (response.ok && data.content) {
+            document.getElementById('clip-input-new').value = atob(data.content);
+        } else {
+            console.error('Clips fetch failed:', data.error || 'Unknown error');
+        }
+    } catch (error) {
+        console.error('An error occurred while fetching clips:', error);
+        alert('A network error occurred. Please try again later.');
+    }
 }
-// Funktion zum Kopieren des Clip-Inhalts in die Zwischenablage
+
+async function updateClip(name, content) {
+    try {
+        const response = await fetch('http://192.168.0.121/api/clipboard.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: name,
+                content: btoa(content),
+                action: 'update'
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.status) {
+            showInfo('Clip updated successfully!');
+            await fetchClips();
+            exitEditingMode();
+            exitSelectedMode();
+        } else {
+            showInfo('Clip update failed!', 'error');
+            console.error('Clip update failed:', data.error || 'Unknown error');
+        }
+    } catch (error) {
+        console.error('An error occurred while updating clip:', error);
+        alert('A network error occurred. Please try again later.');
+    }
+}
+
+async function deleteClip() {
+
+    const name = document.getElementsByClassName('selected')[0].innerText;
+
+    try {
+        const response = await fetch('http://192.168.0.121/api/clipboard.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: name,
+                action: 'delete'
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.status) {
+            showInfo('Clip deleted successfully!');
+            await fetchClips();
+            exitSelectedMode();
+        } else {
+            showInfo('Clip deletion failed!');
+            console.error('Clip deletion failed:', data.error || 'Unknown error');
+        }
+    } catch (error) {
+        console.error('An error occurred while deleting clip:', error);
+        alert('A network error occurred. Please try again later.');
+    }
+}
+
 function copyClip() {
- const element = document.getElementById('clip-input-new');
- if (element) {
- element.select();
- element.setSelectionRange(0, 99999); // Markiert den gesamten Text
- navigator.clipboard.writeText(element.value); // Kopiert den Text in
-die Zwischenablage
- }
- showInfo('Clip-Inhalt wurde kopiert!');
+    const element = document.getElementById('clip-input-new');
+    if (element) {
+        element.select();
+        element.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(element.value);
+    }
+    showInfo('Clip content copied to clipboard!')
 }
-// Funktion zum Anzeigen von Benachrichtigungen
+
+function editClip() {
+    document.getElementById('clip-input-new').classList.contains('editing')
+        ? exitEditingMode()
+        : enterEditingMode();
+}
+
+async function setClipPreviewEventListener() {
+
+    const clips = document.getElementsByClassName('clip');
+
+    for (const clip of clips) {
+        clip.addEventListener('click', async (event) => {
+
+            document.getElementById('clip-input-new').value = "";
+            document.getElementById('cname').value = "";
+
+            if(event.target.classList.contains('selected')) {
+                event.target.style.border = "3px solid transparent";
+                event.target.classList.remove('selected');
+                exitSelectedMode();
+            } else {
+                for(const clip of document.getElementsByClassName('clip')) {
+                    clip.style.border = '3px solid transparent';
+                    clip.classList.remove('selected');
+                }
+
+                const name = event.target.innerText;
+
+                try {
+                    await fetchClip(name); 
+                    document.getElementById('cname').value = name; 
+                    event.target.classList.add('selected');
+                    event.target.style.border = "3px solid #00efef" 
+                    enterSelectedMode();
+                } catch (error) {
+                    console.error('Error handling clip click:', error);
+                }
+            }
+        });
+    }
+}
+
+function enterSelectedMode() {
+    for(const action of document.getElementsByClassName('action')) {
+        action.style.display = 'flex'
+    }
+
+    document.getElementById('cname').disabled = true;
+    document.getElementById('clip-input-new').disabled = true;
+    document.getElementById('create').style.display = "none";
+}
+
+function exitSelectedMode() {
+
+    for(const action of document.getElementsByClassName('action')) {
+        action.style.display = 'none'
+    }
+
+    for(const clip of document.getElementsByClassName('clip')) {
+        clip.style.border = '3px solid transparent'
+    }
+
+    document.getElementById('cname').disabled = false;
+    document.getElementById('clip-input-new').disabled = false;
+    document.getElementById('create').style.display = "flex";
+}
+
+function enterEditingMode() {
+    for(const clip of document.getElementsByClassName('clip')) {
+        clip.style.pointerEvents = 'none'
+    }
+
+    document.getElementById('clip-input-new').classList.add('editing');
+    document.getElementById('clip-input-new').disabled = false;
+    document.getElementById('create').innerText = "Update Clip"
+    document.getElementById('copy').style.display = "none";
+    document.getElementById('create').style.display = "flex";
+    document.getElementById('trash').style.display = "none";
+    document.getElementById('edit').style.border = "3px solid #00efef";
+    document.getElementById('cnewclip').childNodes[1].innerText = "Edit Clip"
+}
+
+function exitEditingMode() {
+    for(const clip of document.getElementsByClassName('clip')) {
+        clip.style.pointerEvents = 'all'
+    }
+
+    document.getElementById('clip-input-new').classList.remove('editing');
+    document.getElementById('clip-input-new').disabled = true;
+    document.getElementById('create').style.display = "none";
+    document.getElementById('create').innerText = "Create Clip"
+    document.getElementById('copy').style.display = "flex";
+    document.getElementById('trash').style.display = "flex";
+    document.getElementById('edit').style.border = "3px solid transparent";
+    document.getElementById('cnewclip').childNodes[1].innerText = "Create Clip"
+}
+
 function showInfo(infoText, level) {
- const infoBox = document.getElementById('infobox');
- infoBox.innerText = infoText;
- infoBox.classList.remove('hidden');
- infoBox.classList.add('visible');
- // Farbe der Benachrichtigung basierend auf der Meldungsstufe ändern
- switch(level) {
- case 'success':
- infoBox.style.color = 'lightgreen';
- break;
- case 'warning':
- infoBox.style.color = 'orange';
- break;
- case 'error':
- infoBox.style.color = 'red';
- break;
- default:
- infoBox.style.color = 'lightgreen';
- }
- // Die Meldung nach 5 Sekunden ausblenden
- setTimeout(() => {
- infoBox.classList.remove('visible');
- infoBox.classList.add('hidden');
- }, 5000);
+    document.getElementById('infobox').innerText = infoText;
+    document.getElementById('infobox').classList.remove('hidden');
+    document.getElementById('infobox').classList.add('visible');
+
+    switch(level) {
+        case 'success':
+            document.getElementById('infobox').style.color = 'lightgreen'
+            break;
+        case 'warning':
+            document.getElementById('infobox').style.color = 'orange'
+            break;
+        case 'error':
+            document.getElementById('infobox').style.color = 'red'
+            break;
+        default:
+            document.getElementById('infobox').style.color = 'lightgreen'
+      } 
+
+    setTimeout(() => {
+        document.getElementById('infobox').classList.remove('visible');
+        document.getElementById('infobox').classList.add('hidden');
+    }, 5000);
 }

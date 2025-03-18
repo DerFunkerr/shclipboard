@@ -46,7 +46,7 @@ Uhrzeit (wird durch JavaScript aktualisiert) -->
  <h1>New Clip</h1>
  <div>
  <!-- Eingabefeld für einen neuen Clip -->
- <textarea type="text" name="Clipboard Input" id="clip-inputnew" placeholder="Paste your text here..."></textarea>
+ <textarea type="text" name="Clipboard Input" id="clip-input-new" placeholder="Paste your text here..."></textarea>
 
  <!-- Dialog zum Speichern und Bearbeiten des Clips -->
  <div id="clipcdialog">
@@ -95,19 +95,5 @@ angezeigt -->
 </body>
 <!-- Einbindung der JavaScript-Dateien für die Funktionalität -->
 <script src="assets/js/index.js"></script>
-1.2 login.php
-Die login.php besteht aus zwei Hauptteilen, genau wie index.php.
-Im PHP-Teil passiert genau das Gleiche, nur dass hier die Weiterleitung vertauscht ist. Wenn
-der Benutzer einen validen Session-Token vorweist, wird er auf die Homepage (index.php)
-weitergeleitet.
-Der HTML-Teil stellt die Benutzeroberfläche für die Anmeldung dar. Sie enthält ein zentrales
-Formular mit zwei Eingabefeldern eines für den Benutzernamen und eines für das Passwort
-beide Felder sind als erforderlich gekennzeichnet, damit der Benutzer keine leeren Werte
-absenden kann, unter den Eingabefeldern befindet sich ein Login-Button, mit dem der Benutzer
-die Anmeldung absendet.
-Am Ende des HTML-Dokuments wird eine JavaScript-Datei eingebunden, die für die interaktive
-Funktionalität des Login-Formulars dient. Sie verarbeitet die Benutzereingaben und sendet eine
-Anfrage an den Server, um die Anmeldeinformationen zu überprüfen.
-WICHTIG: Der PHP Code muss VOR den HTML Code wie bei index.php auch.
 <script src="assets/js/clipboard.js"></script>
 </html>
