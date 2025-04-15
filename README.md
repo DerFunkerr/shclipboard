@@ -5,7 +5,7 @@ Dieses Projekt basiert auf einer externen Anleitung und wurde eigenständig umge
 
 ## 🚀 Projektüberblick
 
-In diesem Projekt entwickeln wir ein Clipboard-Tool, das **ausschließlich auf unserer eigenen Infrastruktur** läuft. Es soll sicher, flexibel und effizient sein – ideal für den täglichen Einsatz in sicherheitsbewussten Umgebungen.
+In diesem Projekt habe ich ein Clipboard-Tool entwickelt, das **ausschließlich auf unserer eigenen Infrastruktur** läuft. Es soll sicher, flexibel und effizient sein – ideal für den täglichen Einsatz in sicherheitsbewussten Umgebungen.
 
 ## 🧩 Architektur & Komponenten
 
@@ -41,8 +41,8 @@ Die Anwendung basiert auf einer soliden Infrastruktur:
 
 ## ❓ Warum dieses Projekt?
 
-Dieses Projekt ist nicht nur ein technisches Experiment, sondern eine praktische Anwendung mit realem Nutzen. Es ermöglicht uns:
-- Unsere Skills in **Entwicklung, Administration und Security** zu vertiefen
+Dieses Projekt ist nicht nur ein technisches Experiment, sondern eine praktische Anwendung mit realem Nutzen. Es ermöglicht mir:
+- Meine Skills in **Entwicklung, Administration und Security** zu vertiefen
 - Eine **sichere und flexible Lösung** für den Alltag zu schaffen
 - Die **volle Kontrolle über Daten und Infrastruktur** zu behalten
 
