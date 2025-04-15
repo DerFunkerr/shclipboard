@@ -1,7 +1,7 @@
 
 # 🗂️ Self-Hosted Clipboard – Volle Kontrolle & maximale Sicherheit
 
-Willkommen zu unserem Entwicklungsprojekt für ein **selbstgehostetes Clipboard-System**. Diese Anwendung bietet maximale Sicherheit und volle Datenkontrolle – komplett ohne externe Dienste oder Drittanbieter-Abhängigkeiten.
+Dieses Projekt basiert auf einer externen Anleitung und wurde eigenständig umgesetzt. Ziel ist es, ein **selbstgehostetes Clipboard-System** bereitzustellen, das maximale Sicherheit und volle Datenkontrolle ermöglicht – komplett ohne externe Dienste oder Drittanbieter-Abhängigkeiten.
 
 ## 🚀 Projektüberblick
 
