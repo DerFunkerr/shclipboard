@@ -10,7 +10,7 @@ In diesem Projekt habe ich ein Clipboard-Tool entwickelt, das **ausschließlich 
 ## 🧩 Architektur & Komponenten
 
 ### 🧭 Container-Verwaltung mit Portainer
-Zur einfachen und transparenten Verwaltung unserer Container setzen wir auf **[Portainer](https://www.portainer.io/)**.
+Zur einfachen und transparenten Verwaltung unserer Container wurde auf **[Portainer](https://www.portainer.io/)** gesetzt.
 
 ### 🔧 Wichtige Backend-Services
 Die Anwendung basiert auf einer soliden Infrastruktur:
@@ -47,3 +47,19 @@ Dieses Projekt ist nicht nur ein technisches Experiment, sondern eine praktische
 - Die **volle Kontrolle über Daten und Infrastruktur** zu behalten
 
 ---
+![image](https://github.com/user-attachments/assets/eecce06b-0f72-408a-b25d-f410ab23e091)
+
+![image](https://github.com/user-attachments/assets/dd09385d-5f66-42c9-8c19-138cd42cfca2)
+
+![image](https://github.com/user-attachments/assets/661a3798-4c73-4b17-8a07-ad24eb5b4be6)
+
+![image](https://github.com/user-attachments/assets/d8acd541-d893-425b-aa41-e8f9d437fb25)
+
+
+
+
+
+
+
+
+
